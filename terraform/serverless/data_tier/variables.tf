@@ -1,3 +1,7 @@
+#######################################################
+# Global Variables
+#######################################################
+
 variable "aws_region" {
   description = "The AWS region"
   type        = string
@@ -51,4 +55,44 @@ variable "response_headers_policy_id" {
   description = "The ID of the response headers policy"
   type        = string
   default     = "eaab4381-ed33-4a86-88ca-d9558dc6cd63" # CORS-with-preflight-and-SecurityHeadersPolicy
+}
+
+#######################################################
+# DynamoDB
+#######################################################
+
+variable "table_name" {
+    description = "The name of the DynamoDB table"
+    type        = string
+    default     = "song_order"
+}
+
+variable "billing_mode" {
+    description = "The billing mode for the DynamoDB table"
+    type        = string
+    default     = "PROVISIONED"
+}
+
+variable "read_capacity" {
+    description = "The read capacity for the DynamoDB table"
+    type        = number
+    default     = 20
+}
+
+variable "write_capacity" {
+    description = "The write capacity for the DynamoDB table"
+    type        = number
+    default     = 20
+}
+
+variable "hash_key" {
+    description = "The hash key for the DynamoDB table"
+    type        = string
+    default     = "song_order"
+}
+
+variable "hash_key_type" {
+    description = "The hash key type for the DynamoDB table"
+    type        = string
+    default     = "S"
 }

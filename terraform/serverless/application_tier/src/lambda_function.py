@@ -94,7 +94,7 @@ def handler(event, context):
     stage_variables = event.get('stageVariables')
     bucket_name = stage_variables.get('bucket')
     cloudfront_url = 'd339fsp1ckp0lm.cloudfront.net'
-    dynamo_db_table_name = 'lyria_song_order'
+    dynamo_db_table_name = 'lyria_song_order_dev' if bucket_name.endswith('dev') else 'lyria_song_order_prod'
     dynamo_db_key = 'song_order'
     song_order = get_song_order(dynamo_db_table_name, dynamo_db_key)
     response = get_song_lists(bucket_name, song_order, cloudfront_url)

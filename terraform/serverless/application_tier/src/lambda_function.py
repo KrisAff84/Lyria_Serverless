@@ -3,10 +3,6 @@ import logging
 import boto3
 
 
-# bucket_prefix = 'dev/songs/' if debug else 'songs/'
-# split_index = 2 if debug else 1
-
-
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 region_name = 'us-east-1'
@@ -84,11 +80,6 @@ def get_song_lists(bucket_name, song_order, cloudfront_url):
         },
         'body': json.dumps(context)
     }
-
-
-# def health_check(request):
-#     """Returns a 200 status code to indicate the server is running."""
-#     return HttpResponse("OK", status=200)
 
 def handler(event, context):
     stage_variables = event.get('stageVariables')

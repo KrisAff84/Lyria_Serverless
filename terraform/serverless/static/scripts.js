@@ -1,7 +1,7 @@
 let songIdx = 0;
 const audioPlayer = document.getElementById("audio-player");
 const playPauseButton = document.getElementById("play-pause");
-const apiEndpoint = "https://d1dm5md3alz8xa.cloudfront.net/dev/index"
+const apiEndpoint = "https://dmhtn2p9csmfo.cloudfront.net/dev/index"
 const skipBackwardButton = document.getElementById("skip-backward");
 const skipForwardButton = document.getElementById("skip-forward");
 

@@ -98,7 +98,10 @@ resource "aws_iam_policy" "lambda_dynamodb_s3_access" {
       {
         Effect   = "Allow"
         Action   = "dynamodb:Scan"
-        Resource = data.aws_dynamodb_table.song_order.arn
+        Resource = [
+          data.aws_dynamodb_table.song_order_dev.arn,
+          data.aws_dynamodb_table.song_order_prod.arn
+        ]
       },
       {
         Effect = "Allow"
@@ -111,7 +114,6 @@ resource "aws_iam_policy" "lambda_dynamodb_s3_access" {
     }]
   })
 }
-
 
 resource "aws_iam_role" "lambda_exec" {
   name = "${var.name-prefix}-lambda-exec"
@@ -154,6 +156,7 @@ resource "terraform_data" "lambda_zip_remove" {
 ##########################################################
 
 resource "aws_cloudfront_distribution" "lyria_lambda_cloudfront" {
+  comment = "Caches API Gateway response for Lyria - Song order and file URLs"
   origin {
     domain_name = replace(aws_apigatewayv2_api.lyria_lambda_api.api_endpoint, "https://", "")
     origin_id   = "api"

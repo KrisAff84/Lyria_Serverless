@@ -8,31 +8,38 @@ from invalidate_cache import invalidate_cloudfront_cache
 
 session = boto3.Session(profile_name='kris84')
 
-# print(f"Song order: {song_order}")
+table_name_suffix = input("Which table would you like to update? dev or prod?: ")
+table_name = f"lyria_song_order_{table_name_suffix}"
 
 dynamodb = session.client('dynamodb')
 response = dynamodb.scan(
-    TableName='lyria_song_order'
+    TableName=table_name
 )
+try:
+    old_song_order = response['Items'][0]['song_order']['S']
+    print(f"Old song order: {old_song_order}")
+    proceed = input("Are you sure you want to update the song order? (y/n) ")
 
-old_song_order = response['Items'][0]['song_order']['S']
-print(f"Old song order: {old_song_order}")
-proceed = input("Are you sure you want to update the song order? (y/n) ")
-
+except IndexError:
+    print("No song order found in table.")
+    proceed = input("Would you like to add a new song order? (y/n) ")
 
 if proceed == 'y':
-    new_song_order = input("Enter the new song order. Separate indexes by comma:")
-    dynamodb.delete_item(
-        TableName='lyria_song_order',
-        Key={
-            'song_order': {
-                'S': old_song_order
+    new_song_order = input("Enter the new song order. Separate indexes by comma: ")
+    try:
+        dynamodb.delete_item(
+            TableName=table_name,
+            Key={
+                'song_order': {
+                    'S': old_song_order
+                }
             }
-        }
-    )
+        )
+    except NameError:
+        pass
 
     dynamodb.put_item(
-        TableName='lyria_song_order',
+        TableName=table_name,
         Item={
             'song_order': {
                 'S': new_song_order
@@ -41,9 +48,8 @@ if proceed == 'y':
     )
     print("Song order updated.")
 
-    invalidate_cloudfront_cache('E3RDP7Z44PB9L6')
+    invalidate_cloudfront_cache('E2POYN6J2WTI8C')
 
 
 else:
     print("Song order not updated. Exiting...")
-

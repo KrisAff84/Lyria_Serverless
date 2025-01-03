@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <title>Meet The Afflerbaughs</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+</head>
+
+<body style="background-color:var(--color1);">
+    <div id="player-container">
+        <div class="player-title">
+            Meet The Afflerbaughs
+        </div>
+        <img id="song-image" src="" alt="Song Image">
+        <audio id="audio-player" controls preload="auto">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="controls">
+            <button class="control-button" id="skip-backward">
+                <ion-icon name="play-skip-back-circle"></ion-icon>
+            </button>
+            <button class="control-button" id="play-pause">
+                <ion-icon name="play-circle" & name="pause-circle"></ion-icon>
+            </button>
+            <button class="control-button" id="skip-forward">
+                <ion-icon name="play-skip-forward-circle"></ion-icon>
+            </button>
+        </div>
+
+        <div class="song-title" id ="dynamic-title">
+
+        </div>
+
+        <div id="list-container">
+            <div id="song-list">
+                <ul>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+</body>
+
+</html>

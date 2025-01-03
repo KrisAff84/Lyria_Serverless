@@ -7,6 +7,7 @@ on:
       - 'terraform/**'
       - '.gitignore'
       - 'hooks/**'
+      - 'diagrams/**'
 
     branches:
       - main

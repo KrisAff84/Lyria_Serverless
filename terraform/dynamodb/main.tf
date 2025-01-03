@@ -1,4 +1,8 @@
-# DynamoDB Table that provides song order for the Lyria application
+/*
+DynamoDB Table that provides song order for the Lyria application.
+Once the new infrastructure is deployed, this configuration should be
+moved to serverless/data_tier, along with the S3 storage bucket configuration.
+*/
 
 provider "aws" {
   profile = var.aws_profile
@@ -11,6 +15,7 @@ resource "aws_dynamodb_table" "lyria_song_order" {
     read_capacity = var.read_capacity
     write_capacity = var.write_capacity
     hash_key = var.hash_key
+
 
     attribute {
         name = var.hash_key

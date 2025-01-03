@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color1: #e8eef2;
+    --color2: #d6c9c9;
+    --color3: #99a3ac;
+    --color4: #1c2e3b;
+    --color5: #37393a;
+    --transparent: rgba(233, 233, 233, 0);
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+#player-container {
+    max-width: 550px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10%;
+    border: 6px solid;
+    border-color: var(--color2);
+    background-color: var(--color5);
+}
+
+.player-title {
+    color: var(--color1);
+    font-size: 25px;
+    margin-top: 10px;
+    font-family: 'optima', serif;
+}
+
+#audio-player {
+    width: 90%;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.control-button {
+    display: flex;
+    margin: 0 13px;
+    padding: 0;
+    background-color: var(--transparent);
+    border: none;
+    cursor: pointer;
+}
+
+ion-icon {
+    font-size: 60px;
+    color: var(--color1);
+    padding: 0;
+    margin: 0;
+}
+
+@media (hover: hover) {
+    ion-icon:hover {
+    color: var(--color3)
+    }
+}
+
+.song-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--color1);
+}
+
+#song-image {
+    width: 90%;
+    height: auto;
+    margin-top: 10px;
+}
+
+#list-container {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: var(--color4);
+    border: 2px solid var(--color1);
+    max-height: 150px;
+    overflow-y: visible;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+#song-list {
+    padding: 5px;
+    cursor: pointer;
+    color: var(--color1);
+}
+
+#song-list li {
+    margin-top: 5px;
+}
+
+#song-list ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin: 0px;
+}
+
+@media (hover: hover) {
+    #song-list li:hover {
+        color: var(--color3);
+        text-size-adjust: 50%;
+    }
+}
+
+/***** Mobile Formatting ******/
+
+@media (max-width: 440px) {
+    #player-container {
+        padding-top: 4vh;
+        border-width: 4px;
+        width: 100%;
+        margin: 0;
+    }
+    #audio-player {
+        height: 10vw;
+    }
+    ion-icon {
+        font-size: 15vw;
+    }
+}
+
+@media (max-width: 390px) {
+    #song-list {
+    font-size: 4vw;
+    }
+    .player-title {
+        font-size: 6vw;
+    }
+    .song-title {
+        font-size: 4.5vw;
+    }
+}

@@ -39,10 +39,10 @@ for item in items:
 
 for item in paths_to_upload:
     # check if item is file or a directory
-    if os.path.isfile(f"../../{item}"):
+    if os.path.isfile(f"../../static/{item}"):
         objects_to_upload.append(item)
     else:
-        sub_items = os.listdir(f"../../{item}")
+        sub_items = os.listdir(f"../../static/{item}")
         # Add sub items to objects_to_upload if they are not in the excluded_paths list
         for sub_item in sub_items:
             if sub_item not in excluded_paths:

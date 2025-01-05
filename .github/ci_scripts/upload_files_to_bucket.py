@@ -10,7 +10,8 @@ bucket_name = os.environ.get("BUCKET_NAME")
 access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
 secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
 excluded_paths = [
-   "icons"
+    "icons",
+    ".DS_Store"
 ]
 
 paths_to_upload = []
@@ -23,7 +24,8 @@ content_type = {
     "png" : "image/png"
 }
 
-items = os.listdir("../../static")
+path = "../../static" # Path of the directory of files to upload
+items = os.listdir(path)
 
 s3 = boto3.client(
     's3',
@@ -39,10 +41,10 @@ for item in items:
 
 for item in paths_to_upload:
     # check if item is file or a directory
-    if os.path.isfile(f"../../static/{item}"):
+    if os.path.isfile(f"{path}/{item}"):
         objects_to_upload.append(item)
     else:
-        sub_items = os.listdir(f"../../static/{item}")
+        sub_items = os.listdir(f"{path}/{item}")
         # Add sub items to objects_to_upload if they are not in the excluded_paths list
         for sub_item in sub_items:
             if sub_item not in excluded_paths:
@@ -52,10 +54,10 @@ print("Files to upload:")
 for object in objects_to_upload:
     print(object)
     if object.split(".")[1] in content_type:
-        s3.upload_file(f"../../{object}", bucket_name, object, ExtraArgs={'ContentType': content_type[f'{object.split(".")[1]}']})
+        s3.upload_file(f"{path}/{object}", bucket_name, object, ExtraArgs={'ContentType': content_type[f'{object.split(".")[1]}']})
 
     else:
-        s3.upload_file(f"../../{object}", bucket_name, object)
+        s3.upload_file(f"{path}/{object}", bucket_name, object)
         print(f"Content type for {object} not found. ContentType will need to be added to file manually in the S3 console.")
 
 print(f"Files uploaded to {bucket_name} successfully.")

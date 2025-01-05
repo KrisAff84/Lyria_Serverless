@@ -9,6 +9,11 @@ TODO: Add a Lambda Authorizer to the API Gateway to authenticate requests
 Add Custom header to CloudFront origin (x-custom-header with random 16 digit value)
 */
 
+provider "aws" {
+  region  = "us-east-1"
+  profile = "kris84"
+}
+
 ##########################################################
 # API Gateway - To expose Lambda function
 ##########################################################
@@ -66,10 +71,6 @@ resource "aws_lambda_permission" "apigw_lambda" {
 # Lambda Function - For interacting with DynamoDB and S3
 ##########################################################
 
-provider "aws" {
-  region  = "us-east-1"
-  profile = "kris84"
-}
 
 resource "aws_lambda_function" "lyria" {
   function_name = "${var.name-prefix}-lambda"

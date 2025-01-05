@@ -2,11 +2,25 @@ import os
 from datetime import datetime
 import boto3
 
+def set_up_boto3_session():
+    aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+    aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+    region = os.getenv("AWS_REGION")
 
-session = boto3.Session(profile_name='kris84')
-cloudfront = session.client('cloudfront')
+    if aws_access_key_id and aws_secret_access_key and region:
+        session = boto3.Session(
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            region_name='us-east-1'
+        )
+    else:
+        session = boto3.Session(profile_name='kris84')
 
-def invalidate_cloudfront_cache(distribution):
+    return session
+
+
+def invalidate_cloudfront_cache(distribution, session):
+    cloudfront = session.client('cloudfront')
     '''
     Invalidate CloudFront cache of specified distribution. Path is set to all objects.
     '''
@@ -38,7 +52,8 @@ def invalidate_cloudfront_cache(distribution):
 
 def main():
     distribution = os.getenv("DISTRIBUTION")
-    invalidate_cloudfront_cache(distribution)
+    session = set_up_boto3_session()
+    invalidate_cloudfront_cache(distribution, session)
 
 if __name__ == '__main__':
     main()

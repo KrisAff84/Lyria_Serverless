@@ -1,4 +1,4 @@
-/* 
+/*
 Creates necessary credentials for CI/CD pipeline:
 - IAM user
 - IAM policy
@@ -10,71 +10,49 @@ provider "aws" {
   region  = var.aws_region
   profile = var.aws_profile
 }
-resource "aws_iam_user" "lyria_dev" {
-  name = "lyria_dev"
+resource "aws_iam_user" "lyria_ci" {
+  name = "lyria_ci"
 }
 
-resource "aws_iam_policy" "lyria_dev_policy" {
-  name        = "lyria_dev_policy"
-  description = "Provides necessary permissions for CI/CD pipeline to manage instances and images"
+resource "aws_iam_policy" "lyria_ci_policy" {
+  name        = "lyria_ci_policy"
+  description = "Provides necessary permissions for CI/CD pipeline to upload objects and invalidate CloudFront Cache"
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
-        "Sid" : "VisualEditor0",
+        "Sid" : "AllowS3PutObject",
         "Effect" : "Allow",
-        "Action" : [
-          "ec2:StartInstances",
-          "ec2:CreateTags",
-          "ec2:CreateImage",
-          "ec2:StopInstances"
-        ],
+        "Action" : "s3:PutObject",
         "Resource" : [
-          "arn:aws:ec2:${var.aws_region}:${var.aws_account_id}:instance/${var.aws_instance_id}"
+          "${data.aws_s3_bucket.dev.arn}/*",
+          "${data.aws_s3_bucket.prod.arn}/*"
         ]
       },
       {
-        "Sid" : "VisualEditor1",
+        "Sid" : "CreateCloudFrontInvalidation",
         "Effect" : "Allow",
-        "Action" : [
-          "ec2:DetachVolume",
-          "ec2:DescribeImages",
-          "ec2:DeleteVolume",
-          "ec2:DeregisterImage",
-          "ec2:DescribeInstances",
-          "ec2:DeleteSnapshot",
-          "ec2:CreateTags",
-          "ec2:CreateImage",
-          "ec2:DescribeInstanceStatus"
-        ],
-        "Resource" : "*"
-      },
-      {
-        "Sid" : "VisualEditor2",
-        "Effect" : "Allow",
-        "Action" : "ec2:DescribeInstanceStatus",
-        "Resource" : [
-          "arn:aws:ec2:${var.aws_region}:${var.aws_account_id}:instance/${var.aws_instance_id}"
-        ]
+        "Action" : "cloudfront:CreateInvalidation",
+        "Resource" : data.aws_cloudfront_distribution.static_files.arn
       }
     ]
   })
 }
 
-resource "aws_iam_user_policy_attachment" "test-attach" {
-  user       = aws_iam_user.lyria_dev.name
-  policy_arn = aws_iam_policy.lyria_dev_policy.arn
+resource "aws_iam_user_policy_attachment" "lyria_ci" {
+  user       = aws_iam_user.lyria_ci.name
+  policy_arn = aws_iam_policy.lyria_ci_policy.arn
 }
 
-resource "aws_iam_access_key" "lyria_dev" {
-  user = aws_iam_user.lyria_dev.name
+resource "aws_iam_access_key" "lyria_ci" {
+  user = aws_iam_user.lyria_ci.name
 }
 
 resource "local_file" "access_key" {
   filename = "access_key.txt"
   content = jsonencode({
-    "access_key_id" : "${aws_iam_access_key.lyria_dev.id}",
-    "secret_access_key" : "${aws_iam_access_key.lyria_dev.secret}"
+    "access_key_id" : "${aws_iam_access_key.lyria_ci.id}",
+    "secret_access_key" : "${aws_iam_access_key.lyria_ci.secret}"
   })
   file_permission = "0600"
 }

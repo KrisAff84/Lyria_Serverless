@@ -1,8 +1,0 @@
-.*
-bucketActions/
-__pycache__/
-terraform/
-compose.yml
-Dockerfile
-nginx.conf
-db.sqlite3

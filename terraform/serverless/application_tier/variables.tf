@@ -1,14 +1,26 @@
+######################################################
+# Global Variables
+######################################################
+
 variable "name-prefix" {
   description = "Prefix for all resources"
   type        = string
   default     = "lyria"
 }
 
+######################################################
+# API Gateway Variables
+######################################################
+
 variable "api_gateway_route" {
   description = "Route for API Gateway"
   type        = string
   default     = "index"
 }
+
+######################################################
+# CloudFront Variables
+######################################################
 
 variable "cache_policy_id" {
   description = "ID of the cache policy for CloudFront"

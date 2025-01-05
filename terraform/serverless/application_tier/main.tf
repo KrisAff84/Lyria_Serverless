@@ -4,6 +4,9 @@ It provisions the following resources:
 1. Lambda function - To get the song order from DynamoDB and return the song list, audio, and image files from S3
 2. API Gateway - To expose the Lambda function as an API
 3. CloudFront - To cache the API Gateway responses
+
+TODO: Add a Lambda Authorizer to the API Gateway to authenticate requests
+Add Custom header to CloudFront origin (x-custom-header with random 16 digit value)
 */
 
 ##########################################################

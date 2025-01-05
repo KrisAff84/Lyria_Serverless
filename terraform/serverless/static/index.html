@@ -7,6 +7,7 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <title>Meet The Afflerbaughs</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="dataFetcher.js"></script>
     <script src="scripts.js" defer></script>
 </head>
 
@@ -19,17 +20,55 @@
         <audio id="audio-player" controls preload="auto">
             Your browser does not support the audio element.
         </audio>
-        <div class="controls">
+        <section class="controls">
             <button class="control-button" id="skip-backward">
-                <ion-icon name="play-skip-back-circle"></ion-icon>
+                <svg
+                    class="icon"
+                    id="skip-backward-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    role="img"
+                    aria-label="Skip Backward Icon"
+                    >
+                    <path d="M48 256c0 114.69 93.31 208 208 208s208-93.31 208-208S370.69 48 256 48 48 141.31 48 256zm128-64a16 16 0 0132 0v53l111.68-67.46a10.78 10.78 0 0116.32 9.33v138.26a10.78 10.78 0 01-16.32 9.31L208 267v53a16 16 0 01-32 0z"/>
+                </svg>
             </button>
             <button class="control-button" id="play-pause">
-                <ion-icon name="play-circle" & name="pause-circle"></ion-icon>
+                <svg
+                    class="icon"
+                    id="play-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    role="img"
+                    aria-label="Play Icon"
+                    >
+                    <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm74.77 217.3l-114.45 69.14a10.78 10.78 0 01-16.32-9.31V186.87a10.78 10.78 0 0116.32-9.31l114.45 69.14a10.89 10.89 0 010 18.6z"/>
+                </svg>
+                <svg
+                    class="icon"
+                    id="pause-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    role="img"
+                    aria-label="Pause Icon"
+                    style="display: none;"
+                    >
+                    <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm-32 272a16 16 0 01-32 0V192a16 16 0 0132 0zm96 0a16 16 0 01-32 0V192a16 16 0 0132 0z"/>
+                </svg>
             </button>
             <button class="control-button" id="skip-forward">
-                <ion-icon name="play-skip-forward-circle"></ion-icon>
+                <svg
+                class="icon"
+                id="skip-forward-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                role="img"
+                aria-label="Skip Forward Icon"
+                >
+                <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm80 272a16 16 0 01-32 0v-53l-111.68 67.44a10.78 10.78 0 01-16.32-9.31V186.87a10.78 10.78 0 0116.32-9.31L304 245v-53a16 16 0 0132 0z"/>
+                </svg>
             </button>
-        </div>
+        </section>
 
         <div class="song-title" id ="dynamic-title">
 
@@ -43,9 +82,6 @@
             </div>
         </div>
     </div>
-
-
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 
 </body>
 

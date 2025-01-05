@@ -57,6 +57,12 @@ body {
     cursor: pointer;
 }
 
+.icon {
+    fill: var(--color1);
+    width: 60px;
+    height: 60px;
+}
+
 ion-icon {
     font-size: 60px;
     color: var(--color1);

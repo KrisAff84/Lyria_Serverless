@@ -1,27 +1,23 @@
 let songIdx = 0;
 const audioPlayer = document.getElementById("audio-player");
 const playPauseButton = document.getElementById("play-pause");
-const apiEndpoint = "https://dmhtn2p9csmfo.cloudfront.net/dev/index"
+const playIcon = document.getElementById("play-icon");
+const pauseIcon = document.getElementById("pause-icon");
 const skipBackwardButton = document.getElementById("skip-backward");
 const skipForwardButton = document.getElementById("skip-forward");
 
-async function fetchData() {
-    const response = await fetch(apiEndpoint);
-    if (!response.ok) {
-        console.error("Failed to fetch data:", response);
-        return;
-    }
-    return response.json();
-}
-
 document.addEventListener("DOMContentLoaded", async  () => {
     const data = await fetchData();
-    initializePlayer(data);
+    if (data) {
+        initializePlayer(data);
+    } else {
+        console.error("Failed to fetch data");
+    }
 });
 
 function initializePlayer(data) {
-    // Get the song list, audio URLs, and image URLs from the data
 
+    // Get the song list, audio URLs, and image URLs from the data
     songTitles = data.song_list;
     audioUrls = data.audio_urls;
     imageUrls = data.image_urls;
@@ -61,23 +57,29 @@ function initializePlayer(data) {
         songList.appendChild(listItem);
     });
 
-    playPauseButton.addEventListener("click", function () {
-        playAudio()
-            .then(() => {
-                // If the audio is playing, show the pause icon
-                if (audioPlayer.paused) {
-                    playPauseButton.innerHTML = `<ion-icon name="play-circle"></ion-icon>`;
-                } else {
-                    playPauseButton.innerHTML = `<ion-icon name="pause-circle"></ion-icon>`;
-                }
+    playPauseButton.addEventListener("click", () => {
+        if (audioPlayer.paused) {
+            // Call playAudio() and handle the promise
+            playAudio()
+                .then(() => {
+                    // If playAudio succeeds, update icons
+                    playIcon.style.display = "none";
+                    pauseIcon.style.display = "inline"; // Show pause icon
+                })
+                .catch(error => {
+                    console.error("Autoplay error:", error);
+                    // Show the play icon in case of an error
+                    playIcon.style.display = "inline";
+                    pauseIcon.style.display = "none";
+                });
                 checkPlayPauseState();
-            })
-            .catch(error => {
-                console.error("Autoplay error:", error);
-                // Show the play icon and let the user initiate playback
-                playPauseButton.innerHTML = `<ion-icon name="play-circle"></ion-icon>`;
-                checkPlayPauseState();
-            });
+        } else {
+            // Pause audio and update icons
+            audioPlayer.pause();
+            playIcon.style.display = "inline"; // Show play icon
+            pauseIcon.style.display = "none";
+            checkPlayPauseState();
+        }
     });
 
     skipBackwardButton.addEventListener("click", function () {
@@ -110,9 +112,11 @@ function initializePlayer(data) {
 
 function checkPlayPauseState() {
     if (audioPlayer.paused) {
-        playPauseButton.innerHTML = `<ion-icon name="play-circle"></ion-icon>`;
+        playIcon.style.display = "inline"; // Show play icon
+        pauseIcon.style.display = "none";
     } else {
-        playPauseButton.innerHTML = `<ion-icon name="pause-circle"></ion-icon>`;
+        playIcon.style.display = "none";
+        pauseIcon.style.display = "inline"; // Show pause icon
     }
 }
 
@@ -145,11 +149,11 @@ function updateAudioPlayer(newIdx) {
     // Handle the canplay event to start playback
     audioPlayer.addEventListener("canplay", function onCanPlay() {
         audioPlayer.play();
-        playPauseButton.innerHTML = `<ion-icon name="pause-circle"></ion-icon>`;
+        playIcon.style.display = "none";
+        pauseIcon.style.display = "inline"; // Show pause icon
         audioPlayer.removeEventListener("canplay", onCanPlay);  // Remove the event listener after the first playback
     });
 
     checkPlayPauseState();
     songIdx = newIdx;
 }
-

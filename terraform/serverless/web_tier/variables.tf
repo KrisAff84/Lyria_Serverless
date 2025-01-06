@@ -41,7 +41,7 @@ variable "domain_aliases" {
 
 variable "certificate_arn" {
   description = "ARN of the ACM certificate for CloudFront"
-  default     = "arn:aws:acm:us-east-1:637423562225:certificate/03361d5b-5364-4894-b08c-7d616666f112"
+  default     = "arn:aws:acm:us-east-1:637423562225:certificate/2245c5fa-a3d3-485c-aa9d-953e277d8700"
 }
 
 variable "cache_policy_id" {

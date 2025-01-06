@@ -63,11 +63,11 @@ resource "aws_s3_bucket_policy" "dev_static_files" {
     Id      = "PublicReadAccess"
     Statement = [
       {
-        Sid    = "PublicReadGetObject"
-        Effect = "Allow"
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
         Principal = "*"
-        Action   = "s3:GetObject"
-        Resource = "${aws_s3_bucket.static_files["dev"].arn}/*"
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.static_files["dev"].arn}/*"
       }
     ]
   })

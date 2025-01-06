@@ -6,11 +6,11 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "lyria-terraform-state"
+    bucket         = "lyria-terraform-state-2024"
     encrypt        = true
-    dynamodb_table = "lyria-state-locks"
+    dynamodb_table = "lyria-state-locks-2024"
     key            = "dns_records/terraform.tfstate"
-    region         = "us-east-2"
-    profile        = "admin-profile"
+    region         = "us-east-1"
+    profile        = "kris84"
   }
 }

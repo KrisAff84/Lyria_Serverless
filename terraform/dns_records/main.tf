@@ -1,6 +1,6 @@
 provider "aws" {
-  region  = "us-east-2"
-  profile = "admin-profile"
+  region  = "us-east-1"
+  profile = "kris84"
 }
 
 
@@ -31,28 +31,6 @@ resource "aws_route53_record" "main_AAAA" {
   }
 }
 
-resource "aws_route53_record" "misspelled_A" {
-  zone_id = var.zone_id_misspelled
-  name    = var.record_name_misspelled
-  type    = "A"
-
-  alias {
-    name                   = var.cf_dns_site
-    zone_id                = var.cf_zone_id
-    evaluate_target_health = true
-  }
-}
-resource "aws_route53_record" "misspelled_AAAA" {
-  zone_id = var.zone_id_misspelled
-  name    = var.record_name_misspelled
-  type    = "AAAA"
-
-  alias {
-    name                   = var.cf_dns_site
-    zone_id                = var.cf_zone_id
-    evaluate_target_health = true
-  }
-}
 
 #######################################
 # Records for CloudFront to S3 origin

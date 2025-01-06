@@ -82,8 +82,9 @@ resource "aws_s3_bucket_policy" "dev_static_files" {
 resource "aws_cloudfront_distribution" "static_files" {
   comment             = "Caches Lyria Static Files from S3"
   enabled             = true
-  default_root_object = "index.html"
   is_ipv6_enabled     = true
+  default_root_object = "index.html"
+  aliases             = var.domain_aliases
 
 
   origin {
@@ -111,9 +112,11 @@ resource "aws_cloudfront_distribution" "static_files" {
     }
   }
 
-  # Change this eventually to custom certificate
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = var.certificate_arn
+    minimum_protocol_version = "TLSv1.2_2021"
+    ssl_support_method       = "sni-only"
+
   }
 
   # Add logging bucket eventually

@@ -32,7 +32,10 @@ resource "aws_iam_policy" "lyria_ci_policy" {
       {
         "Sid" : "CreateCloudFrontInvalidation",
         "Effect" : "Allow",
-        "Action" : "cloudfront:CreateInvalidation",
+        "Action" : [
+          "cloudfront:CreateInvalidation",
+          "cloudfront:GetInvalidation"
+        ]
         "Resource" : data.aws_cloudfront_distribution.static_files.arn
       }
     ]

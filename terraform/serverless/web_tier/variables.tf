@@ -30,6 +30,20 @@ variable "name_prefix" {
 # CloudFront Variables
 #########################################################
 
+variable "domain_aliases" {
+  type        = list(string)
+  description = "Domain aliases for the CloudFront distribution/SSL certificate"
+  default = [
+    "meettheafflerbaughs.com",
+    "www.meettheafflerbaughs.com",
+  ]
+}
+
+variable "certificate_arn" {
+  description = "ARN of the ACM certificate for CloudFront"
+  default     = "arn:aws:acm:us-east-1:637423562225:certificate/03361d5b-5364-4894-b08c-7d616666f112"
+}
+
 variable "cache_policy_id" {
   description = "ID of the cache policy for CloudFront"
   default     = "658327ea-f89d-4fab-a63d-7e88639e58f6" # CachingOptimized

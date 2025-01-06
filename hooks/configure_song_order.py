@@ -48,7 +48,7 @@ if proceed == 'y':
     )
     print("Song order updated.")
 
-    invalidate_cloudfront_cache('E2POYN6J2WTI8C')
+    invalidate_cloudfront_cache('E2POYN6J2WTI8C', session)
 
 
 else:

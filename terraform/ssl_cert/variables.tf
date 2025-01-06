@@ -22,8 +22,6 @@ variable "alternate_domains" {
   default = [
     "www.meettheafflerbaughs.com",
     "meettheafflerbaughs.com",
-    "meetheafflerbaughs.com",
-    "www.meetheafflerbaughs.com"
   ]
 }
 

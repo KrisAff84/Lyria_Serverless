@@ -1,6 +1,5 @@
 /*
-This file configures the necessary SSL certificate to use with
-the load balancer and CloudFront distribution.
+This file configures an SSL certificate and adds the verification records to Route 53.
 */
 
 provider "aws" {
@@ -14,11 +13,13 @@ resource "aws_acm_certificate" "ssl" {
   validation_method         = "DNS"
   key_algorithm             = var.key_algorithm
 
-  tags = {
-    Name    = "SSL Certificate"
-    Project = "Lyria"
-    Use     = "Static Files CloudFront distribution"
-  }
+  tags = var.tags
+}
+
+resource "aws_acm_certificate_validation" "ssl" {
+  certificate_arn         = aws_acm_certificate.ssl.arn
+  validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
+
 }
 
 resource "aws_route53_record" "validation" {
@@ -38,11 +39,6 @@ resource "aws_route53_record" "validation" {
   ttl     = 300
 }
 
-resource "aws_acm_certificate_validation" "ssl" {
-  certificate_arn         = aws_acm_certificate.ssl.arn
-  validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
-
-}
 
 data "aws_route53_zone" "main" {
   name = var.domain_name

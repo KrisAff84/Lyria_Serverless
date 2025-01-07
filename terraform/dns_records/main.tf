@@ -3,51 +3,24 @@ provider "aws" {
   profile = "kris84"
 }
 
-
-##############################################
-# Records for CloudFront to API for Main Site
-##############################################
-
-resource "aws_route53_record" "main_A" {
-  zone_id = var.zone_id_main
-  name    = var.record_name
-  type    = "A"
+resource "aws_route53_record" "alias" {
+  for_each = toset(["A", "AAAA"])
+  zone_id  = var.hz_zone_id
+  name     = var.record_name
+  type     = each.key
 
   alias {
-    name                   = var.cf_dns_site
-    zone_id                = var.cf_zone_id
-    evaluate_target_health = true
-  }
-}
-resource "aws_route53_record" "main_AAAA" {
-  zone_id = var.zone_id_main
-  name    = var.record_name
-  type    = "AAAA"
-
-  alias {
-    name                   = var.cf_dns_site
-    zone_id                = var.cf_zone_id
+    name                   = data.aws_cloudfront_distribution.static_files.domain_name
+    zone_id                = data.aws_cloudfront_distribution.static_files.hosted_zone_id
     evaluate_target_health = true
   }
 }
 
+resource "aws_route53_record" "www" {
+  zone_id = var.hz_zone_id
+  name    = "www.${var.record_name}"
+  type    = "CNAME"
+  ttl     = var.cname_ttl
 
-#######################################
-# Records for CloudFront to S3 origin
-#######################################
-
-# resource "aws_route53_record" "cf_s3_origin_main" {
-#   zone_id = var.zone_id_main
-#   name    = var.cf_s3_origin_main_name
-#   type    = "CNAME"
-#   records = [var.cf_s3_origin_main_record]
-#   ttl     = var.cf_s3_origin_ttl
-# }
-
-# resource "aws_route53_record" "cf_s3_origin_misspelled" {
-#   zone_id = var.zone_id_misspelled
-#   name    = var.cf_s3_origin_misspelled_name
-#   type    = "CNAME"
-#   records = [var.cf_s3_origin_misspelled_record]
-#   ttl     = var.cf_s3_origin_ttl
-# }
+  records = [ "${var.record_name}."]
+}

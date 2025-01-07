@@ -1,4 +1,4 @@
-const apiEndpoint = "https://dmhtn2p9csmfo.cloudfront.net/dev/index"
+const apiEndpoint = "https://dmhtn2p9csmfo.cloudfront.net/prod/index"
 
 async function fetchData() {
     const response = await fetch(apiEndpoint);

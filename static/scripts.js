@@ -43,6 +43,11 @@ function initializePlayer(data) {
         const listItem = document.createElement("li");
         listItem.textContent = song;
 
+    // Set the first song as active
+    if (index === 0) {
+        listItem.classList.add("song-list-active");
+    }
+
     // Add an event listener to each song in the list
     listItem.addEventListener("click", () => {
         // Update audio, image, and title on song click
@@ -50,12 +55,21 @@ function initializePlayer(data) {
         songImage.src = imageUrls[index];
         dynamicTitle.textContent = song;
 
+        // Update the active song in the song list
+        const listItems = document.querySelectorAll("#song-list ul li");
+        listItems.forEach(item => item.classList.remove("song-list-active"));
+        listItem.classList.add("song-list-active");
+
+        // Update the song index
+        songIdx = index;
+
         // Play the selected song
         audioPlayer.play();
     });
 
         songList.appendChild(listItem);
     });
+
 
     playPauseButton.addEventListener("click", () => {
         if (audioPlayer.paused) {
@@ -85,12 +99,26 @@ function initializePlayer(data) {
     skipBackwardButton.addEventListener("click", function () {
         const newIdx = (songIdx - 1 + songTitles.length) % songTitles.length;
         songIdx = newIdx;
+
+        // Update the active song in the song list
+        const listItems = document.querySelectorAll("#song-list ul li");
+        listItems.forEach(item => item.classList.remove("song-list-active"));
+        listItems[newIdx].classList.add("song-list-active");
+
+        // Update the audio player with the new index
         updateAudioPlayer(newIdx);
     });
 
     skipForwardButton.addEventListener("click", function () {
         const newIdx = (songIdx + 1) % songTitles.length;
         songIdx = newIdx;
+
+        // Update the active song in the song list
+        const listItems = document.querySelectorAll("#song-list ul li");
+        listItems.forEach(item => item.classList.remove("song-list-active"));
+        listItems[newIdx].classList.add("song-list-active");
+
+        // Update the audio player with the new index
         updateAudioPlayer(newIdx);
     });
 

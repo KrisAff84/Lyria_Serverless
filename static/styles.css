@@ -122,14 +122,25 @@ ion-icon {
     margin: 0px;
 }
 
+/*************** Mouse Behavior ****************/
+
 @media (hover: hover) {
     #song-list li:hover {
         color: var(--color3);
-        text-size-adjust: 50%;
+        transform: scale(1.01);
+    }
+    .icon:hover {
+        fill: var(--color3);
+        transform: scale(1.06);
     }
 }
 
-/***** Mobile Formatting ******/
+.song-list-active {
+    color: var(--color3);
+    transform: scale(1.04);
+}
+
+/*************** Mobile Formatting ****************/
 
 @media (max-width: 440px) {
     #player-container {

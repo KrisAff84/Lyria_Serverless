@@ -30,3 +30,13 @@ variable "key_algorithm" {
   type        = string
   default     = "EC_prime256v1"
 }
+
+variable "tags" {
+  description = "Tags to apply to the SSL certificate"
+  type        = map(string)
+  default     = {
+    Name    = "SSL Certificate"
+    Project = "Lyria"
+    Use     = "Static Files CloudFront distribution"
+  }
+}

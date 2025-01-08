@@ -10,6 +10,7 @@
     --color3: #99a3ac;
     --color4: #1c2e3b;
     --color5: #37393a;
+    --color6: #3e5261b9;
     --transparent: rgba(233, 233, 233, 0);
 }
 
@@ -94,9 +95,9 @@ ion-icon {
     margin-top: 15px;
     margin-bottom: 15px;
     background-color: var(--color4);
-    border: 2px solid var(--color1);
+    border: 1px solid var(--color1);
     max-height: 150px;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
@@ -178,4 +179,22 @@ ion-icon {
     backface-visibility: hidden;
     perspective: 1000px;
     will-change: transform;
+}
+
+/************* Custom Scrollbar *************/
+
+#list-container::-webkit-scrollbar {
+    width: .6em;
+}
+
+#list-container::-webkit-scrollbar-track {
+    background-color: var(--color6);
+    border-radius: 100vw;
+    margin-block: .18em;
+}
+
+#list-container::-webkit-scrollbar-thumb {
+    background-color: var(--color4);
+    border-radius: 100vw;
+    border: .18em solid var(--color6);
 }

@@ -62,37 +62,25 @@ variable "response_headers_policy_id" {
 #######################################################
 
 variable "table_name" {
-    description = "The name of the DynamoDB table"
-    type        = string
-    default     = "song_order"
+  description = "The name of the DynamoDB table"
+  type        = string
+  default     = "song_order"
 }
 
 variable "billing_mode" {
-    description = "The billing mode for the DynamoDB table"
-    type        = string
-    default     = "PROVISIONED"
-}
-
-variable "read_capacity" {
-    description = "The read capacity for the DynamoDB table"
-    type        = number
-    default     = 20
-}
-
-variable "write_capacity" {
-    description = "The write capacity for the DynamoDB table"
-    type        = number
-    default     = 20
+  description = "The billing mode for the DynamoDB table"
+  type        = string
+  default     = "PAY_PER_REQUEST"
 }
 
 variable "hash_key" {
-    description = "The hash key for the DynamoDB table"
-    type        = string
-    default     = "song_order"
+  description = "The hash key for the DynamoDB table"
+  type        = string
+  default     = "song_order"
 }
 
 variable "hash_key_type" {
-    description = "The hash key type for the DynamoDB table"
-    type        = string
-    default     = "S"
+  description = "The hash key type for the DynamoDB table"
+  type        = string
+  default     = "S"
 }

@@ -180,16 +180,14 @@ resource "aws_cloudfront_distribution" "storage_bucket" {
 #######################################################
 
 resource "aws_dynamodb_table" "lyria_song_order" {
-  for_each      = toset(["dev", "prod"])
-  name = "${var.name_prefix}_${var.table_name}_${each.key}"
-  billing_mode = var.billing_mode
-  read_capacity = var.read_capacity
-  write_capacity = var.write_capacity
-  hash_key = var.hash_key
+  for_each     = toset(["dev", "prod"])
+  name         = "${var.name_prefix}_${var.table_name}_${each.key}"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = var.hash_key
 
 
   attribute {
-      name = var.hash_key
-      type = var.hash_key_type
+    name = var.hash_key
+    type = var.hash_key_type
   }
 }
